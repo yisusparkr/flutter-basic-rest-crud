@@ -14,15 +14,13 @@ class SigningIn extends SignInState {}
 class SignInError extends SignInState {
 
   final String? errorMessage;
-  final bool? closeDialog;
 
   SignInError({
     this.errorMessage,
-    this.closeDialog
   });
 
   @override
-  List get props => [errorMessage, closeDialog];
+  List get props => [errorMessage];
 
 } 
 

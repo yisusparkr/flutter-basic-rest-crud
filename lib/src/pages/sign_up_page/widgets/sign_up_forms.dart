@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '/src/utils/validate_email.dart';
-import '/src/bloc/sign_in/sign_in_bloc.dart';
-import '/src/pages/sign_up_page/sign_up_page.dart';
+import '/src/bloc/sign_up/sign_up_bloc.dart';
 
-class SignInForms extends StatefulWidget {
+
+class SignUpForms extends StatefulWidget {
 
   final double formFontSize;
   final double buttonFontSize;
   final bool showIcons; 
 
-  SignInForms({
+  SignUpForms({
     Key? key, 
     this.formFontSize = 18.0,
     this.buttonFontSize = 16.0,
@@ -19,11 +19,12 @@ class SignInForms extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SignInFormsState createState() => _SignInFormsState();
+  _SignUpFormsState createState() => _SignUpFormsState();
 }
 
-class _SignInFormsState extends State<SignInForms> {
+class _SignUpFormsState extends State<SignUpForms> {
 
+  final _firstNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -37,6 +38,23 @@ class _SignInFormsState extends State<SignInForms> {
       key: _formKey,
       child: Column(
         children: [
+          TextFormField(
+            controller: _firstNameController,
+            enableSuggestions: true,
+            keyboardType: TextInputType.name,
+            textInputAction: TextInputAction.next,
+            style: formTextStyle,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'First name',
+              icon: ( this.widget.showIcons ) ? Icon(Icons.email_rounded) : null
+            ),
+            validator: ( value ) {
+              if ( value == null || value.isEmpty ) return 'First name is necesary';
+              return null;
+            },
+          ),
+          SizedBox( height: 15.0 ),
           TextFormField(
             controller: _emailController,
             enableSuggestions: true,
@@ -66,7 +84,8 @@ class _SignInFormsState extends State<SignInForms> {
               icon: ( this.widget.showIcons ) ? Icon(Icons.lock_rounded) : null
             ),
             validator: ( value ) {
-              if ( value == null || value.isEmpty ) return 'Write your password';
+              if ( value == null || value.isEmpty ) return 'Input a password';
+              if ( value.length < 8 ) return 'At least 8 characters';
               return null;
             },
           ),
@@ -86,30 +105,14 @@ class _SignInFormsState extends State<SignInForms> {
               ),
               onPressed: () {
                 if ( _formKey.currentState!.validate() ) {
+                  final firstName =  this._firstNameController.text.toLowerCase().trim();
                   final email = this._emailController.text.toLowerCase().trim();
                   final password = this._passwordController.text.trim();
-                  BlocProvider.of<SignInBloc>(context).add( OnUserSignIn( email, password ) );
+                  BlocProvider.of<SignUpBloc>(context).add( OnUserSignUp( firstName, email, password ) );
                 }
               }
             ),
-          ),
-          SizedBox( height: 30.0 ),
-          Container(
-            height: 40.0,
-            constraints: BoxConstraints(
-              maxWidth: 300.0,
-              minWidth: 200.0
-            ),
-            child: MaterialButton(
-              shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(5.0) ),
-              color: Colors.blue,
-              child: Text(
-                'Sign up',
-                style: TextStyle( fontSize: this.widget.buttonFontSize, color: Colors.white ),
-              ),
-              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SignUpPage()))
-            ),
-          ),
+          )
         ],
       ),
     );

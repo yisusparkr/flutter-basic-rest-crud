@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'widgets/sign_in_forms.dart';
-import 'widgets/sign_in_title.dart';
-import '/src/bloc/sign_in/sign_in_bloc.dart';
+import 'widgets/sign_up_forms.dart';
+import 'widgets/sign_up_title.dart';
+import '/src/bloc/sign_up/sign_up_bloc.dart';
 import '/src/pages/home_page/home_page.dart';
+import '/src/helpers/helpers.dart' as helpers;
 
-class SingInPage extends StatelessWidget {
+class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -31,17 +32,17 @@ class SingInPage extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            child: BlocListener<SignInBloc, SignInState>(
+            child: BlocListener<SignUpBloc, SignUpState>(
               listenWhen: (previous, current) {
-                if ( current is SignedIn ) return true;
-                if ( current is SigningIn ) return true;
-                if ( current is SignInError ) return true;
+                if ( current is SigningUp ) return true;
+                if ( current is SignedUp ) return true;
+                if ( current is SignUpError ) return true;
                 return false;
               },
               listener: ( _ , state ) {
-                if ( state is SignedIn ) _navigate( context );
-                if ( state is SigningIn ) _showLoadingDialog(context);
-                if ( state is SignInError ) _showErrorSnackBar(context, state.errorMessage!, state.closeDialog);
+                if ( state is SignedUp ) helpers.navigate(context, HomePage());
+                if ( state is SigningUp ) helpers.showLoadingDialog(context, 'Signing Up');
+                if ( state is SignUpError ) helpers.showErrorSnackBar(context, state.errorMessage!);
               },
               child: Container(
                 padding: const EdgeInsets.symmetric( horizontal: 20.0, vertical: 30.0 ),
@@ -52,13 +53,19 @@ class SingInPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    IconButton(
+                      splashRadius: 15.0,
+                      icon: Icon(Icons.close),
+                      onPressed: () => Navigator.pop(context), 
+                    ),
+                    SizedBox( height: 20.0 ),
                     FlutterLogo(
                       size: logoSize,
                     ),
                     SizedBox( height: 50.0 ),
-                    SignInTitle( titleFontSize: titleFontSize ),
+                    SignUpTitle( titleFontSize: titleFontSize ),
                     SizedBox( height: 30.0 ),
-                    SignInForms(
+                    SignUpForms(
                       showIcons: showIcons,
                       formFontSize: formFontSize,
                       buttonFontSize: buttonFontSize
@@ -70,47 +77,6 @@ class SingInPage extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  void _navigate( BuildContext context ) {
-    Navigator.of(context).pop();
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomePage()));
-  }
-
-  void _showLoadingDialog( BuildContext context ) {
-    showDialog(
-      context: context, 
-      builder: (context) => AlertDialog(
-        title: Text('Signing In'),
-        content: Container(
-          height: 100.0,
-          width: 100.0,
-          child: Center(
-            child: CircularProgressIndicator(
-              color: Colors.blue,
-              strokeWidth: 1.5,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _showErrorSnackBar( BuildContext context, String message, bool? closeDialog ) {
-
-    if ( closeDialog != null && closeDialog ) Navigator.of(context).pop();
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Row(
-          children: [
-            Icon(Icons.error, color: Colors.red),
-            SizedBox( width: 10.0 ),
-            Text(message)
-          ],
-        )
-      )
     );
   }
 
