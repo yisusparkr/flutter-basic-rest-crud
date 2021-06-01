@@ -1,3 +1,5 @@
+import 'package:basic_rest_crud/src/bloc/interview_bloc/interview_bloc.dart';
+import 'package:basic_rest_crud/src/data/repositories/hive_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,15 +8,24 @@ import 'src/bloc/sign_up/sign_up_bloc.dart';
 import 'src/pages/sign_in_page/sign_in_page.dart';
 import 'src/data/repositories/login_repository.dart';
  
-void main() => runApp(
-  MultiBlocProvider(
-    providers: [
-      BlocProvider(create: (_) => SignInBloc( loginRepository: LoginRepository() )),
-      BlocProvider(create: (_) => SignUpBloc( loginRepository: LoginRepository() )),
-    ],
-    child: MyApp()
-  )
-);
+Future<void> main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final HiveRepository hiveRepository = HiveRepository();
+  await hiveRepository.initDB();
+  
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => SignInBloc( loginRepository: LoginRepository() )),
+        BlocProvider(create: (_) => SignUpBloc( loginRepository: LoginRepository() )),
+        BlocProvider(create: (_) => InterviewBloc( hiveRepository: hiveRepository )),
+      ],
+      child: MyApp()
+    )
+  );
+}
  
 class MyApp extends StatelessWidget {
   @override

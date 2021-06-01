@@ -6,6 +6,7 @@ import 'widgets/sign_in_title.dart';
 import '/src/bloc/sign_in/sign_in_bloc.dart';
 import '/src/pages/home_page/home_page.dart';
 import '/src/helpers/helpers.dart' as helpers;
+import '/src/bloc/interview_bloc/interview_bloc.dart';
 
 class SingInPage extends StatelessWidget {
 
@@ -41,7 +42,10 @@ class SingInPage extends StatelessWidget {
               },
               listener: ( _ , state ) {
                 if ( state is SigningIn ) helpers.showLoadingDialog(context, 'Signing In');
-                if ( state is SignedIn ) helpers.navigate( context, HomePage() );
+                if ( state is SignedIn ) {
+                  BlocProvider.of<InterviewBloc>(context).add( OnLoadInterviews() );
+                  helpers.navigate( context, HomePage( userName: state.userName ));
+                }
                 if ( state is SignInError ) helpers.showErrorSnackBar(context, state.errorMessage!);
               },
               child: Container(

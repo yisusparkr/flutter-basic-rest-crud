@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:basic_rest_crud/src/constants/constants.dart' as constants;
 
 class SignUpTitle extends StatelessWidget {
 
@@ -16,7 +17,7 @@ class SignUpTitle extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'Register',
+            constants.signUpTitle,
             style: TextStyle( fontSize: this.titleFontSize, fontWeight: FontWeight.w400 )
           ),
           Container(

@@ -24,4 +24,7 @@ class SignUpError extends SignUpState {
 
 }
 
-class SignedUp extends SignUpState {}
+class SignedUp extends SignUpState {
+  final String userName;
+  SignedUp(this.userName);
+}

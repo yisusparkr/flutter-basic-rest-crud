@@ -6,6 +6,7 @@ import 'widgets/sign_up_title.dart';
 import '/src/bloc/sign_up/sign_up_bloc.dart';
 import '/src/pages/home_page/home_page.dart';
 import '/src/helpers/helpers.dart' as helpers;
+import '/src/bloc/interview_bloc/interview_bloc.dart';
 
 class SignUpPage extends StatelessWidget {
 
@@ -40,7 +41,10 @@ class SignUpPage extends StatelessWidget {
                 return false;
               },
               listener: ( _ , state ) {
-                if ( state is SignedUp ) helpers.navigate(context, HomePage());
+                if ( state is SignedUp ) {
+                  BlocProvider.of<InterviewBloc>(context).add( OnLoadInterviews() );
+                  helpers.navigate( context, HomePage( userName: state.userName ));
+                }
                 if ( state is SigningUp ) helpers.showLoadingDialog(context, 'Signing Up');
                 if ( state is SignUpError ) helpers.showErrorSnackBar(context, state.errorMessage!);
               },
