@@ -36,6 +36,30 @@ class AddingNewInterview extends InterviewState {
 
 }
 
+class ModifyingInterview extends InterviewState {
+
+  final CompanyModel? interview;
+  ModifyingInterview({
+    this.interview
+  });
+
+  @override
+  List get props => [interview];
+
+}
+
+class WatchingInterview extends InterviewState {
+
+  final CompanyModel? interview;
+  WatchingInterview({
+    this.interview
+  });
+
+  @override
+  List get props => [interview];
+
+}
+
 class SendInterviews extends InterviewState {}
 
 class SendInterviewsError extends InterviewState {

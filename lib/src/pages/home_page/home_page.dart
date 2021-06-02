@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '/src/bloc/interview_bloc/interview_bloc.dart';
 import 'widgets/add_interview_dialog.dart';
+import 'widgets/my_interviews_widget.dart';
+import '/src/bloc/interview_bloc/interview_bloc.dart';
 
 class HomePage extends StatelessWidget {
 
@@ -14,10 +15,18 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0.0,
         title: Text('Welcome ${this.userName}'),
+        actions: [
+          IconButton(
+            splashRadius: 20.0,
+            icon: Icon(Icons.sync_rounded),
+            onPressed: () {}, 
+          )
+        ],
       ),
       body: BlocConsumer<InterviewBloc, InterviewState>(
-        listenWhen: (previous, current) {
+        listenWhen: ( _ , current ) {
           if ( current is SendInterviews ) return true;
           if ( current is SendInterviewsError ) return true;
           return false;
@@ -26,26 +35,19 @@ class HomePage extends StatelessWidget {
           if ( state is SendInterviews ) print('send interviews state');
           if ( state is SendInterviewsError ) print('send interviewserror state');
         },
-        buildWhen: (previous, current) {
+        buildWhen: ( _ , current ) {
           if ( current is InterviewsLoaded ) return true;
           return false;
         },
         builder: ( _ , state ) {
           if ( state is InterviewsLoaded ) {
-            return ( state.interviews != [] ) 
-            ? Container(
-              child: ListView.builder(
-                itemCount: state.interviews!.length,
-                itemBuilder: ( _ , index ) {
-                  return Text('${state.interviews![index].enterprise}');
-                },
-              ),
-            )
-            : Center(
-              child: Text('Without interviews'),
-            );
+            if ( state.interviews!.isNotEmpty ) {
+              return MyInterviwsWidgets(interviews: state.interviews!);
+            }
           }
-          return SizedBox();
+          return Center(
+            child: Text('Without interviews'),
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -58,12 +60,12 @@ class HomePage extends StatelessWidget {
 
   void _addInterviewDialog( BuildContext context ) {
 
-    BlocProvider.of<InterviewBloc>(context, listen: false).add( OnUserAddInterview() );;
+    BlocProvider.of<InterviewBloc>(context, listen: false).add( OnUserAddInterview() );
 
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => AddIntreviewDialog()
+      builder: (context) => AddInterviewDialog()
     );
   }
 }

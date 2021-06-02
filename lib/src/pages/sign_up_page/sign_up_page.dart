@@ -6,6 +6,7 @@ import 'widgets/sign_up_title.dart';
 import '/src/bloc/sign_up/sign_up_bloc.dart';
 import '/src/pages/home_page/home_page.dart';
 import '/src/helpers/helpers.dart' as helpers;
+import '/src/constants/constants.dart' as constants;
 import '/src/bloc/interview_bloc/interview_bloc.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -34,7 +35,7 @@ class SignUpPage extends StatelessWidget {
         child: Center(
           child: SingleChildScrollView(
             child: BlocListener<SignUpBloc, SignUpState>(
-              listenWhen: (previous, current) {
+              listenWhen: ( _ , current ) {
                 if ( current is SigningUp ) return true;
                 if ( current is SignedUp ) return true;
                 if ( current is SignUpError ) return true;
@@ -45,7 +46,7 @@ class SignUpPage extends StatelessWidget {
                   BlocProvider.of<InterviewBloc>(context).add( OnLoadInterviews() );
                   helpers.navigate( context, HomePage( userName: state.userName ));
                 }
-                if ( state is SigningUp ) helpers.showLoadingDialog(context, 'Signing Up');
+                if ( state is SigningUp ) helpers.showLoadingDialog(context, constants.signingUpTitle);
                 if ( state is SignUpError ) helpers.showErrorSnackBar(context, state.errorMessage!);
               },
               child: Container(

@@ -6,7 +6,15 @@ class OnLoadInterviews extends InterviewEvent {}
 
 class OnUserAddInterview extends InterviewEvent {}
 
-class OnUserModifyInterview extends InterviewEvent {}
+class OnUserModifyInterview extends InterviewEvent {
+  final CompanyModel interview;
+  OnUserModifyInterview(this.interview);
+}
+
+class OnUserWatchInterview extends InterviewEvent {
+  final CompanyModel interview;
+  OnUserWatchInterview(this.interview);
+}
 
 class OnUserWriteCompanyName extends InterviewEvent {
   final int key;
@@ -28,13 +36,18 @@ class OnUserWriteNumber extends InterviewEvent {
 
 class OnUserSelectDateTime extends InterviewEvent {
   final int key;
-  final String date;
+  final DateTime date;
   OnUserSelectDateTime(this.key, this.date);
 }
 
 class OnUserSaveInterview extends InterviewEvent {
   final int key;
   OnUserSaveInterview(this.key);
+}
+
+class OnUserDeleteInterview extends InterviewEvent {
+  final int key;
+  OnUserDeleteInterview(this.key);
 }
 
 

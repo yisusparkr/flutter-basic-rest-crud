@@ -5,21 +5,25 @@ part 'company_model.g.dart';
 class CompanyModel extends HiveObject{
 
   @HiveField(0)
-  late String? enterprise;
+  late int? key;
 
   @HiveField(1)
-  late String? number;
+  late String? enterprise;
 
   @HiveField(2)
-  late String? comment;
+  late String? number;
 
   @HiveField(3)
-  late String? date;
+  late String? comment;
 
   @HiveField(4)
+  late DateTime? date;
+
+  @HiveField(5)
   late String? state;
 
   CompanyModel({
+    this.key,
     this.enterprise, 
     this.number, 
     this.comment, 

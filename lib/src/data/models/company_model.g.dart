@@ -17,27 +17,30 @@ class CompanyModelAdapter extends TypeAdapter<CompanyModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return CompanyModel(
-      enterprise: fields[0] as String?,
-      number: fields[1] as String?,
-      comment: fields[2] as String?,
-      date: fields[3] as String?,
-      state: fields[4] as String?,
+      key: fields[0] as int?,
+      enterprise: fields[1] as String?,
+      number: fields[2] as String?,
+      comment: fields[3] as String?,
+      date: fields[4] as DateTime?,
+      state: fields[5] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, CompanyModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
-      ..write(obj.enterprise)
+      ..write(obj.key)
       ..writeByte(1)
-      ..write(obj.number)
+      ..write(obj.enterprise)
       ..writeByte(2)
-      ..write(obj.comment)
+      ..write(obj.number)
       ..writeByte(3)
-      ..write(obj.date)
+      ..write(obj.comment)
       ..writeByte(4)
+      ..write(obj.date)
+      ..writeByte(5)
       ..write(obj.state);
   }
 

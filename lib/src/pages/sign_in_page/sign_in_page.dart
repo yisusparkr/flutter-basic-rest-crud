@@ -6,6 +6,7 @@ import 'widgets/sign_in_title.dart';
 import '/src/bloc/sign_in/sign_in_bloc.dart';
 import '/src/pages/home_page/home_page.dart';
 import '/src/helpers/helpers.dart' as helpers;
+import '/src/constants/constants.dart' as constants;
 import '/src/bloc/interview_bloc/interview_bloc.dart';
 
 class SingInPage extends StatelessWidget {
@@ -34,14 +35,14 @@ class SingInPage extends StatelessWidget {
         child: Center(
           child: SingleChildScrollView(
             child: BlocListener<SignInBloc, SignInState>(
-              listenWhen: (previous, current) {
+              listenWhen: ( _ , current ) {
                 if ( current is SignedIn ) return true;
                 if ( current is SigningIn ) return true;
                 if ( current is SignInError ) return true;
                 return false;
               },
               listener: ( _ , state ) {
-                if ( state is SigningIn ) helpers.showLoadingDialog(context, 'Signing In');
+                if ( state is SigningIn ) helpers.showLoadingDialog(context, constants.signingInTitle );
                 if ( state is SignedIn ) {
                   BlocProvider.of<InterviewBloc>(context).add( OnLoadInterviews() );
                   helpers.navigate( context, HomePage( userName: state.userName ));

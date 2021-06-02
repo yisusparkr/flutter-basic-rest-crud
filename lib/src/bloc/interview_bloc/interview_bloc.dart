@@ -26,16 +26,26 @@ class InterviewBloc extends Bloc<InterviewEvent, InterviewState> {
     } else if ( event is OnUserAddInterview ) {
       final key = await hiveRepository.addInterview();
       yield AddingNewInterview( key: key );
+    } else if ( event is OnUserModifyInterview ) {
+      yield ModifyingInterview( interview: event.interview );
+    } else if ( event is OnUserWatchInterview ) {
+      yield WatchingInterview( interview: event.interview );
     } else if ( event is OnUserWriteCompanyName ) {
       await hiveRepository.modifyInterview( event.key, name: event.company );
     } else if ( event is OnUserWriteComment ) {
-      await hiveRepository.modifyInterview( event.key, name: event.comment );
+      await hiveRepository.modifyInterview( event.key, comment: event.comment );
     } else if ( event is OnUserWriteNumber ) {
-      await hiveRepository.modifyInterview( event.key, name: event.number );
+      await hiveRepository.modifyInterview( event.key, number: event.number );
     } else if ( event is OnUserSelectDateTime ) {
-      await hiveRepository.modifyInterview( event.key, name: event.date );
+      await hiveRepository.modifyInterview( event.key, date: event.date );
     } else if ( event is OnUserSaveInterview ) {
       await hiveRepository.saveInterview(event.key);
+      final interviews = await hiveRepository.getInterviews();
+      yield InterviewsLoaded( interviews: interviews );
+    } else if ( event is OnUserDeleteInterview ) {
+      await hiveRepository.deleteInterview(event.key);
+      final interviews = await hiveRepository.getInterviews();
+      yield InterviewsLoaded( interviews: interviews );
     }
   }
 }

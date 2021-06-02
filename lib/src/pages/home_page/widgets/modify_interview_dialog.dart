@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'add_interview_forms.dart';
+import 'modify_interview_forms.dart';
 import '/src/constants/constants.dart' as constants;
 import '/src/bloc/interview_bloc/interview_bloc.dart';
 
-class AddInterviewDialog extends StatelessWidget {
+class ModifyInterviewDialog extends StatelessWidget {
 
-  final addInterviewFormKey = GlobalKey<FormState>();  
+  final modifyInterviewFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,20 +20,25 @@ class AddInterviewDialog extends StatelessWidget {
         return true;
       },
       child: BlocBuilder<InterviewBloc, InterviewState>(
-        builder: ( _ , state ) {
-        int key = 0;
-        if ( state is AddingNewInterview ) key = state.key!;
+        builder: (context, state) {
+          int key = 0;
+          
+          if ( state is WatchingInterview ) {
+            key = state.interview!.key!;
+          } else if ( state is ModifyingInterview ) {
+            key = state.interview!.key!;
+          }
           return AlertDialog(
             titlePadding: const EdgeInsets.all(0),
             title: Container(
               padding: const EdgeInsets.only( left: 10.0 ),
-              height: 40.0,
+              height: 50.0,
               width: double.infinity,
               color: Colors.blue,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(constants.addInterviewTitle, style: TextStyle( color: Colors.white )),
+                  Text(constants.modifyInterviewTitle, style: TextStyle( color: Colors.white )),
                   IconButton(
                     splashRadius: 15.0,
                     color: Colors.white,
@@ -46,7 +51,7 @@ class AddInterviewDialog extends StatelessWidget {
                 ],
               ),
             ),
-            content: AddInterviewForms( addInterviewFormKey: addInterviewFormKey ),
+            content: ModifyInterviewForms( modifyInterviewFormKey: modifyInterviewFormKey ),
             actions: [
               TextButton(
                 child: Text(constants.closeText),
@@ -58,7 +63,7 @@ class AddInterviewDialog extends StatelessWidget {
               TextButton(
                 child: Text(constants.saveText),
                 onPressed: () {
-                  if ( addInterviewFormKey.currentState!.validate() ) {
+                  if ( modifyInterviewFormKey.currentState!.validate() ) {
                     interviewBloc.add( OnUserSaveInterview(key) );
                     Navigator.of(context).pop();
                   }
@@ -66,7 +71,7 @@ class AddInterviewDialog extends StatelessWidget {
               )
             ],
           );
-        }
+        },
       ),
     );
   }
