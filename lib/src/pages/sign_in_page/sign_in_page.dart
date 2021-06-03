@@ -44,7 +44,7 @@ class SingInPage extends StatelessWidget {
               listener: ( _ , state ) {
                 if ( state is SigningIn ) helpers.showLoadingDialog(context, constants.signingInTitle );
                 if ( state is SignedIn ) {
-                  BlocProvider.of<InterviewBloc>(context).add( OnLoadInterviews() );
+                  BlocProvider.of<InterviewBloc>(context).add( OnInitializeInterviews(userEmail: state.userEmail) );
                   helpers.navigate( context, HomePage( userName: state.userName ));
                 }
                 if ( state is SignInError ) helpers.showErrorSnackBar(context, state.errorMessage!);

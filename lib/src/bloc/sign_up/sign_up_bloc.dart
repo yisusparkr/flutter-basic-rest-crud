@@ -36,10 +36,11 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       final response = await loginRepository.signUp(firstName, email, password);
       final status = response['status'];
       final userName = response['name'];
+      final userEmail = response['email'];
       switch ( status ) {
         case 'user-registered':
           print('$status, navigate to home page');
-          yield SignedUp(userName);
+          yield SignedUp(userName, userEmail);
           break;
         case 'user-already-registered':
           print(status);
@@ -47,7 +48,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           break;
         default:
       }
-      
     } catch(error) {
       print(error);
       yield SignUpError( errorMessage: 'Something went wrong: $error' );

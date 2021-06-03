@@ -26,5 +26,6 @@ class SignUpError extends SignUpState {
 
 class SignedUp extends SignUpState {
   final String userName;
-  SignedUp(this.userName);
+  final String userEmail;
+  SignedUp(this.userName, this.userEmail);
 }

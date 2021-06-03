@@ -2,6 +2,11 @@ part of 'interview_bloc.dart';
 
 abstract class InterviewEvent {}
 
+class OnInitializeInterviews extends InterviewEvent {
+  final String? userEmail;
+  OnInitializeInterviews({this.userEmail});
+}
+
 class OnLoadInterviews extends InterviewEvent {}
 
 class OnUserAddInterview extends InterviewEvent {}
@@ -49,5 +54,7 @@ class OnUserDeleteInterview extends InterviewEvent {
   final int key;
   OnUserDeleteInterview(this.key);
 }
+
+class OnUserSendInterviews extends InterviewEvent {}
 
 

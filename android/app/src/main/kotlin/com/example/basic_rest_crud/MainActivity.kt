@@ -1,4 +1,4 @@
-package com.example.basic_rest_crud
+package com.jesus_coronado.basic_rest_crud
 
 import io.flutter.embedding.android.FlutterActivity
 

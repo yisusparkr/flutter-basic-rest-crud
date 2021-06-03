@@ -33,6 +33,12 @@ class _SignUpFormsState extends State<SignUpForms> {
   Widget build(BuildContext context) {
 
     final formTextStyle = TextStyle( fontSize: this.widget.formFontSize );
+    final screenSize = MediaQuery.of(context).size;
+    double buttonHeight = 40.0;
+
+    if ( screenSize.width > 425 ) {
+      buttonHeight = ( screenSize.width > 768 ) ? 45.0 : 50.0;
+    }
 
     return Form(
       key: _formKey,
@@ -47,7 +53,7 @@ class _SignUpFormsState extends State<SignUpForms> {
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'First name',
-              icon: ( this.widget.showIcons ) ? Icon(Icons.email_rounded) : null
+              icon: ( this.widget.showIcons ) ? Icon(Icons.person) : null
             ),
             validator: ( value ) {
               if ( value == null || value.isEmpty ) return 'First name is necesary';
@@ -91,7 +97,7 @@ class _SignUpFormsState extends State<SignUpForms> {
           ),
           SizedBox( height: 30.0 ),
           Container(
-            height: 40.0,
+            height: buttonHeight,
             constraints: BoxConstraints(
               maxWidth: 300.0,
               minWidth: 200.0
@@ -100,7 +106,7 @@ class _SignUpFormsState extends State<SignUpForms> {
               shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(5.0) ),
               color: Colors.blue,
               child: Text(
-                'Sign in',
+                'Sign up',
                 style: TextStyle( fontSize: this.widget.buttonFontSize, color: Colors.white ),
               ),
               onPressed: () {

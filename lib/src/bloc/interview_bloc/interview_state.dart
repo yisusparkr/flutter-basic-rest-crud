@@ -10,6 +10,8 @@ abstract class InterviewState extends Equatable {
 
 class InterviewInitial extends InterviewState {}
 
+class InterviewsInitialized extends InterviewState {}
+
 class InterviewsLoaded extends InterviewState {
 
   final List<CompanyModel>? interviews;
@@ -60,17 +62,32 @@ class WatchingInterview extends InterviewState {
 
 }
 
-class SendInterviews extends InterviewState {}
+class SendingInterviews extends InterviewState {}
+
+class InterviewsSent extends InterviewState {
+
+  final String? message;
+
+  InterviewsSent({
+    this.message
+  });
+
+  @override
+  List get props => [message];
+
+}
 
 class SendInterviewsError extends InterviewState {
 
   final String? errorMessage;
+  final bool? pop;
 
   SendInterviewsError({
-    this.errorMessage
+    this.errorMessage,
+    this.pop
   });
 
   @override
-  List get props => [errorMessage];
+  List get props => [errorMessage, pop];
 
 }

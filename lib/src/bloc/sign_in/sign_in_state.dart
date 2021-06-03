@@ -26,5 +26,6 @@ class SignInError extends SignInState {
 
 class SignedIn extends SignInState {
   final String userName;
-  SignedIn(this.userName);
+  final String userEmail;
+  SignedIn(this.userName, this.userEmail);
 }

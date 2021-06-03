@@ -43,7 +43,7 @@ class SignUpPage extends StatelessWidget {
               },
               listener: ( _ , state ) {
                 if ( state is SignedUp ) {
-                  BlocProvider.of<InterviewBloc>(context).add( OnLoadInterviews() );
+                  BlocProvider.of<InterviewBloc>(context).add( OnInitializeInterviews(userEmail: state.userEmail) );
                   helpers.navigate( context, HomePage( userName: state.userName ));
                 }
                 if ( state is SigningUp ) helpers.showLoadingDialog(context, constants.signingUpTitle);

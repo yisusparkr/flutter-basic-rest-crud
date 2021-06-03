@@ -34,79 +34,84 @@ class AddInterviewForms extends StatelessWidget {
           child: Form(
             key: this.addInterviewFormKey,
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  TextFormField(
-                    controller: companyController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Company'
-                    ),
-                    validator: (value) {
-                      if ( value == null || value.isEmpty ) return 'Copmany name is necessary';
-                      return null;
-                    },
-                    onChanged: ( value ) => interviewBloc.add( OnUserWriteCompanyName(key, value.trim()) ),
-                  ),
-                  SizedBox( height: 15.0 ),
-                  TextFormField(
-                    controller: commentController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Comment'
-                    ),
-                    validator: (value) {
-                      if ( value == null || value.isEmpty ) return 'This field is necessary';
-                      return null;
-                    },
-                    onChanged: ( value ) => interviewBloc.add( OnUserWriteComment(key, value.trim()) ),
-                  ),
-                  SizedBox( height: 15.0 ),
-                  TextFormField(
-                    controller: numberController,
-                    keyboardType: TextInputType.phone,
-                    inputFormatters: [maskFormatter],
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Number'
-                    ),
-                    validator: (value) {
-                      if ( value == null || value.isEmpty ) return 'Copmany number is necessary';
-                      return null;
-                    },
-                    onChanged: ( value ) => interviewBloc.add( OnUserWriteNumber(key, value.trim()) ),
-                  ),
-                  SizedBox( height: 15.0 ),
-                  Row(
-                    children: [
-                      Flexible(
-                        child: TextFormField(
-                          controller: dateController,
-                          enabled: false,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Date',
-                          ),
-                          validator: (value) {
-                            if ( value == null || value.isEmpty ) return 'The date is necessary';
-                            return null;
-                          },
-                        ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: companyController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Company'
                       ),
-                      IconButton(
-                        splashRadius: 20.0,
-                        icon: Icon(Icons.date_range),
-                        onPressed: () async {
-                          final date = await _pickDateTime( context );
-                          final selectedDate = '${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}';
-                          dateController.text = selectedDate;
-                          interviewBloc.add( OnUserSelectDateTime(key, date) );
-                        }
-                      )
-                    ],
-                  ),
-                  SizedBox( height: 15.0 ),
-                ],
+                      validator: (value) {
+                        if ( value == null || value.isEmpty ) return 'Copmany name is necessary';
+                        return null;
+                      },
+                      onChanged: ( value ) => interviewBloc.add( OnUserWriteCompanyName(key, value.trim()) ),
+                    ),
+                    SizedBox( height: 15.0 ),
+                    TextFormField(
+                      controller: commentController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Comment'
+                      ),
+                      validator: (value) {
+                        if ( value == null || value.isEmpty ) return 'This field is necessary';
+                        return null;
+                      },
+                      onChanged: ( value ) => interviewBloc.add( OnUserWriteComment(key, value.trim()) ),
+                    ),
+                    SizedBox( height: 15.0 ),
+                    TextFormField(
+                      controller: numberController,
+                      keyboardType: TextInputType.phone,
+                      inputFormatters: [maskFormatter],
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Number'
+                      ),
+                      validator: (value) {
+                        if ( value == null || value.isEmpty ) return 'Copmany number is necessary';
+                        return null;
+                      },
+                      onChanged: ( value ) => interviewBloc.add( OnUserWriteNumber(key, value.trim()) ),
+                    ),
+                    SizedBox( height: 15.0 ),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: TextFormField(
+                            controller: dateController,
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Date',
+                            ),
+                            validator: (value) {
+                              if ( value == null || value.isEmpty ) return 'The date is necessary';
+                              return null;
+                            },
+                          ),
+                        ),
+                        IconButton(
+                          splashRadius: 20.0,
+                          icon: Icon(Icons.date_range),
+                          onPressed: () async {
+                            final date = await _pickDateTime( context );
+                            if ( date != '' ) {
+                              interviewBloc.add( OnUserSelectDateTime(key, date) );
+                              final selectedDate = '${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}';
+                              dateController.text = selectedDate;
+                            }
+                          }
+                        )
+                      ],
+                    ),
+                    SizedBox( height: 15.0 ),
+                  ],
+                ),
               ),
             )
           ),
@@ -118,6 +123,7 @@ class AddInterviewForms extends StatelessWidget {
   Future<dynamic> _pickDateTime( BuildContext context ) async {
     final date = await showDatePicker(
       context: context, 
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
       initialDate: DateTime.now(), 
       firstDate: DateTime( 2021 ), 
       lastDate: DateTime( 2022 )

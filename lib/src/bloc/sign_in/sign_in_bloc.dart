@@ -34,6 +34,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
       final response = await loginRepository.signIn( email, password );
       final status = response['status'];
       final userName = response['name'];
+      final userEmail = response['email'];
       switch ( status ) {
         case 'user-not-found':
           print(status);
@@ -45,7 +46,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
           break;
         case 'login-success':
           print('$response, navigate to home page');
-          yield SignedIn(userName);
+          yield SignedIn(userName, userEmail);
           break;
         default:
       }

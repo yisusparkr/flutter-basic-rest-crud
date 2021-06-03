@@ -1,7 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.basic_rest_crud">
+    package="com.jesus_coronado.basic_rest_crud">
+
+  <uses-permission android:name="android.permission.INTERNET"/>
+
    <application
-        android:label="basic_rest_crud"
+        android:label="Basic REST - CRUD "
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
