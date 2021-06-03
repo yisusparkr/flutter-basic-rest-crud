@@ -6,20 +6,12 @@ void navigate( BuildContext context, Widget page ) {
 }
 
 void showLoadingDialog( BuildContext context, String title ) {
-
-  final screenSize = MediaQuery.of(context).size;
-  double alertFontSize = 18.0; 
-
-  if ( screenSize.width > 425 ) {
-    alertFontSize = ( screenSize.width > 768 ) ? 25.0 : 20.0;
-  }
-
   showDialog(
     context: context, 
     builder: (context) => AlertDialog(
       title: Text(
         title,
-        style: TextStyle( fontSize: alertFontSize ),
+        style: TextStyle( fontSize: 18.0 ),
       ),
       content: Container(
         height: 100.0,
@@ -37,27 +29,18 @@ void showLoadingDialog( BuildContext context, String title ) {
 
 void showErrorSnackBar( BuildContext context, String message ) {
 
-  final screenSize = MediaQuery.of(context).size;
-  double errorFontSize = 14.0; 
-  double iconsSize = 24.0;
-
-  if ( screenSize.width > 425 ) {
-    errorFontSize = ( screenSize.width > 768 ) ? 18.0 : 24.0;
-    iconsSize = ( screenSize.width > 768 ) ? 32.0 : 28.0;
-  }
-
   Navigator.of(context).pop();
 
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Row(
         children: [
-          Icon(Icons.error, size: iconsSize, color: Colors.red),
+          Icon(Icons.error, size: 24.0, color: Colors.red),
           SizedBox( width: 10.0 ),
           Flexible(
             child: Text(
               message,
-              style: TextStyle( fontSize: errorFontSize ),
+              style: TextStyle( fontSize: 15.0 ),
               overflow: TextOverflow.ellipsis,
             ),
           )

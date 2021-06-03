@@ -6,18 +6,6 @@ import '/src/bloc/sign_in/sign_in_bloc.dart';
 import '/src/pages/sign_up_page/sign_up_page.dart';
 
 class SignInForms extends StatefulWidget {
-
-  final double formFontSize;
-  final double buttonFontSize;
-  final bool showIcons; 
-
-  SignInForms({
-    Key? key, 
-    this.formFontSize = 18.0,
-    this.buttonFontSize = 16.0,
-    this.showIcons = true, 
-  }) : super(key: key);
-
   @override
   _SignInFormsState createState() => _SignInFormsState();
 }
@@ -31,7 +19,7 @@ class _SignInFormsState extends State<SignInForms> {
   @override
   Widget build(BuildContext context) {
 
-    final formTextStyle = TextStyle( fontSize: this.widget.formFontSize );
+    final formTextStyle = TextStyle( fontSize: 18.0 );
 
     return Form(
       key: _formKey,
@@ -46,7 +34,7 @@ class _SignInFormsState extends State<SignInForms> {
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Email',
-              icon: ( this.widget.showIcons ) ? Icon(Icons.email_rounded) : null
+              icon: Icon(Icons.email_rounded)
             ),
             validator: ( value ) {
               if ( value == null || value.isEmpty || !validateEmail(value.trim()) ) return 'example@example.com';
@@ -63,7 +51,7 @@ class _SignInFormsState extends State<SignInForms> {
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Password',
-              icon: ( this.widget.showIcons ) ? Icon(Icons.lock_rounded) : null
+              icon: Icon(Icons.lock_rounded)
             ),
             validator: ( value ) {
               if ( value == null || value.isEmpty ) return 'Write your password';
@@ -82,7 +70,7 @@ class _SignInFormsState extends State<SignInForms> {
               color: Colors.blue,
               child: Text(
                 'Sign in',
-                style: TextStyle( fontSize: this.widget.buttonFontSize, color: Colors.white ),
+                style: TextStyle( fontSize: 18.0, color: Colors.white ),
               ),
               onPressed: () {
                 if ( _formKey.currentState!.validate() ) {
@@ -105,7 +93,7 @@ class _SignInFormsState extends State<SignInForms> {
               color: Colors.blue,
               child: Text(
                 'Sign up',
-                style: TextStyle( fontSize: this.widget.buttonFontSize, color: Colors.white ),
+                style: TextStyle( fontSize: 18.0, color: Colors.white ),
               ),
               onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => SignUpPage()))
             ),

@@ -15,30 +15,17 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final screenSize = MediaQuery.of(context).size;
-    double titleFontSize = 20.0;
-    double iconsSize = 24.0;
-    double iconsSplashSize = 20.0;
-
-    if ( screenSize.width > 425 ) {
-      titleFontSize = ( screenSize.width > 768 ) ? 30.0 : 25.0;
-      iconsSize = ( screenSize.width > 768 ) ? 32.0 : 28.0;
-    }
-
-    iconsSplashSize = iconsSize - 4;
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
         title: Text(
           '${constants.welcomeTitle} ${this.userName.toUpperCase()}',
-          style: TextStyle( fontSize: titleFontSize ),
+          style: TextStyle( fontSize: 20.0 ),
         ),
         actions: [
           IconButton(
-            iconSize: iconsSize,
-            splashRadius: iconsSplashSize,
+            iconSize: 24.0,
+            splashRadius: 15.0,
             icon: Icon(Icons.sync_rounded),
             onPressed: () => BlocProvider.of<InterviewBloc>(context, listen: false).add( OnUserSendInterviews() ), 
           )
@@ -72,7 +59,7 @@ class HomePage extends StatelessWidget {
               return Center(
                 child: Text(
                   '${constants.withoutInterviewsText}',
-                  style: TextStyle( fontSize: titleFontSize ),
+                  style: TextStyle( fontSize: 20.0 ),
                 )
               );
             }
@@ -84,7 +71,7 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue,
-        child: Icon(Icons.add, size: iconsSize,),
+        child: Icon(Icons.add, size: 24.0,),
         onPressed: () => _addInterviewDialog(context)
       ),
     );

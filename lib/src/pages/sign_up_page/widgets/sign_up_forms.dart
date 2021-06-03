@@ -6,18 +6,6 @@ import '/src/bloc/sign_up/sign_up_bloc.dart';
 
 
 class SignUpForms extends StatefulWidget {
-
-  final double formFontSize;
-  final double buttonFontSize;
-  final bool showIcons; 
-
-  SignUpForms({
-    Key? key, 
-    this.formFontSize = 18.0,
-    this.buttonFontSize = 16.0,
-    this.showIcons = true, 
-  }) : super(key: key);
-
   @override
   _SignUpFormsState createState() => _SignUpFormsState();
 }
@@ -32,13 +20,7 @@ class _SignUpFormsState extends State<SignUpForms> {
   @override
   Widget build(BuildContext context) {
 
-    final formTextStyle = TextStyle( fontSize: this.widget.formFontSize );
-    final screenSize = MediaQuery.of(context).size;
-    double buttonHeight = 40.0;
-
-    if ( screenSize.width > 425 ) {
-      buttonHeight = ( screenSize.width > 768 ) ? 45.0 : 50.0;
-    }
+    final formTextStyle = TextStyle( fontSize: 18.0 );
 
     return Form(
       key: _formKey,
@@ -53,7 +35,7 @@ class _SignUpFormsState extends State<SignUpForms> {
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'First name',
-              icon: ( this.widget.showIcons ) ? Icon(Icons.person) : null
+              icon: Icon(Icons.person)
             ),
             validator: ( value ) {
               if ( value == null || value.isEmpty ) return 'First name is necesary';
@@ -70,7 +52,7 @@ class _SignUpFormsState extends State<SignUpForms> {
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Email',
-              icon: ( this.widget.showIcons ) ? Icon(Icons.email_rounded) : null
+              icon: Icon(Icons.email_rounded)
             ),
             validator: ( value ) {
               if ( value == null || value.isEmpty || !validateEmail(value.trim()) ) return 'example@example.com';
@@ -87,7 +69,7 @@ class _SignUpFormsState extends State<SignUpForms> {
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Password',
-              icon: ( this.widget.showIcons ) ? Icon(Icons.lock_rounded) : null
+              icon: Icon(Icons.lock_rounded)
             ),
             validator: ( value ) {
               if ( value == null || value.isEmpty ) return 'Input a password';
@@ -97,7 +79,7 @@ class _SignUpFormsState extends State<SignUpForms> {
           ),
           SizedBox( height: 30.0 ),
           Container(
-            height: buttonHeight,
+            height: 40.0,
             constraints: BoxConstraints(
               maxWidth: 300.0,
               minWidth: 200.0
@@ -107,7 +89,7 @@ class _SignUpFormsState extends State<SignUpForms> {
               color: Colors.blue,
               child: Text(
                 'Sign up',
-                style: TextStyle( fontSize: this.widget.buttonFontSize, color: Colors.white ),
+                style: TextStyle( fontSize: 18.0, color: Colors.white ),
               ),
               onPressed: () {
                 if ( _formKey.currentState!.validate() ) {

@@ -17,19 +17,6 @@ class InterviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final screenSize = MediaQuery.of(context).size;
-    double textFontSize = 20.0;
-    double descriptionFontSize = 16.0;
-    double iconsSize = 24.0;
-
-    if ( screenSize.width > 425 ) {
-      textFontSize = ( screenSize.width > 768 ) ? 30.0 : 25.0;
-      iconsSize = ( screenSize.width > 768 ) ? 32.0 : 28.0;
-    }
-
-    descriptionFontSize = textFontSize - 2;
-
     return Ink(
       child: InkWell(
         onTap: () => _modifyInterviewDialog( context, this.interview ),
@@ -44,29 +31,29 @@ class InterviewWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      ( this.interview.enterprise != null ) 
+                      ( this.interview.enterprise != null && this.interview.enterprise!.isNotEmpty ) 
                         ? '${this.interview.enterprise}' 
                         : 'Empty',
-                      style: TextStyle( fontSize: textFontSize, fontWeight: FontWeight.w500 ),
+                      style: TextStyle( fontSize: 20.0, fontWeight: FontWeight.w500 ),
                     ),
                     Text(
-                      ( this.interview.comment != null ) 
+                      ( this.interview.comment != null && this.interview.comment!.isNotEmpty ) 
                         ? '${this.interview.comment}' 
                         : 'Empty',
-                      style: TextStyle( fontSize: descriptionFontSize, fontWeight: FontWeight.w300 ),
+                      style: TextStyle( fontSize: 16.0, fontWeight: FontWeight.w300 ),
                       overflow: TextOverflow.ellipsis,
                     ),
                     if ( interview.date != null ) Text(
                       '${this.date}',
-                      style: TextStyle( fontSize: descriptionFontSize, fontWeight: FontWeight.w200 ),
+                      style: TextStyle( fontSize: 16.0, fontWeight: FontWeight.w200 ),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
               ),
               Flexible( child: ( interview.state == 'Completed' )
-                ? Icon( Icons.done, size: iconsSize, color: Colors.green, )
-                : Icon( Icons.close, size: iconsSize, color: Colors.red, )
+                ? Icon( Icons.done, size: 24.0, color: Colors.green, )
+                : Icon( Icons.close, size: 24.0, color: Colors.red, )
               )
             ],
           ),

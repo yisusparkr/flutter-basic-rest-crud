@@ -13,21 +13,6 @@ class ModifyInterviewDialog extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final interviewBloc = BlocProvider.of<InterviewBloc>(context, listen: false);
-    final screenSize = MediaQuery.of(context).size;
-    double titleFontSize = 20.0;
-    double textButtonFontSize = 16.0;
-    double containerHeight = 40.0;
-    double iconsSize = 24.0;
-    double iconsSplashSize = 20.0;
-
-    if ( screenSize.width > 425 ) {
-      titleFontSize = ( screenSize.width > 768 ) ? 30.0 : 25.0;
-      containerHeight = ( screenSize.width > 768 ) ? 60.0 : 50.0;
-      textButtonFontSize = ( screenSize.width > 768 ) ? 25.0 : 20.0;
-      iconsSize = ( screenSize.width > 768 ) ? 32.0 : 28.0;
-    }
-
-    iconsSplashSize = iconsSize - 4;
 
     return WillPopScope(
       onWillPop: () async {
@@ -47,7 +32,7 @@ class ModifyInterviewDialog extends StatelessWidget {
             titlePadding: const EdgeInsets.all(0),
             title: Container(
               padding: const EdgeInsets.only( left: 10.0 ),
-              height: containerHeight,
+              height: 40.0,
               width: double.infinity,
               color: Colors.blue,
               child: Row(
@@ -55,12 +40,12 @@ class ModifyInterviewDialog extends StatelessWidget {
                 children: [
                   Text(
                     '${constants.modifyInterviewTitle}', 
-                    style: TextStyle( fontSize: titleFontSize, color: Colors.white )
+                    style: TextStyle( fontSize: 20.0, color: Colors.white )
                   ),
                   IconButton(
-                    splashRadius: iconsSplashSize,
+                    splashRadius: 15.0,
                     color: Colors.white,
-                    icon: Icon(Icons.delete, size: iconsSize),
+                    icon: Icon(Icons.delete, size: 24.0),
                     onPressed: () {
                       Navigator.of(context).pop();
                       interviewBloc.add( OnUserDeleteInterview(key) );
@@ -74,7 +59,7 @@ class ModifyInterviewDialog extends StatelessWidget {
               TextButton(
                 child: Text(
                   '${constants.closeText}',
-                  style: TextStyle( fontSize: textButtonFontSize ),
+                  style: TextStyle( fontSize: 18.0 ),
                 ),
                 onPressed: () {
                   interviewBloc.add( OnLoadInterviews() );
@@ -84,7 +69,7 @@ class ModifyInterviewDialog extends StatelessWidget {
               TextButton(
                 child: Text(
                   '${constants.saveText}',
-                  style: TextStyle( fontSize: textButtonFontSize ),
+                  style: TextStyle( fontSize: 18.0 ),
                 ),
                 onPressed: () {
                   if ( modifyInterviewFormKey.currentState!.validate() ) {

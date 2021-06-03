@@ -13,23 +13,6 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final screenSize = MediaQuery.of(context).size;
-    double logoSize = 150.0;
-    double titleFontSize = 25.0;
-    double formFontSize = 18.0;
-    double buttonFontSize = 16.0;
-    bool showIcons = true;
-
-    if ( screenSize.width > 425 ) {
-      logoSize = ( screenSize.width > 768 ) ? 200.0 : 150.0;
-      titleFontSize = ( screenSize.width > 768 ) ? 35.0 : 30.0;
-      formFontSize = ( screenSize.width > 768 ) ? 25.0 : 20.0;
-      buttonFontSize = formFontSize - 2;
-    }
-
-    if ( screenSize.width < 425 ) showIcons = false;
-
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -65,16 +48,12 @@ class SignUpPage extends StatelessWidget {
                     ),
                     SizedBox( height: 20.0 ),
                     FlutterLogo(
-                      size: logoSize,
+                      size: 150.0,
                     ),
                     SizedBox( height: 50.0 ),
-                    SignUpTitle( titleFontSize: titleFontSize ),
+                    SignUpTitle(),
                     SizedBox( height: 30.0 ),
-                    SignUpForms(
-                      showIcons: showIcons,
-                      formFontSize: formFontSize,
-                      buttonFontSize: buttonFontSize
-                    ),
+                    SignUpForms(),
                   ],
                 ),
               ),

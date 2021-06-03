@@ -14,14 +14,6 @@ class MyInterviewsWidgets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final screenSize = MediaQuery.of(context).size;
-    double titleFontSize = 20.0;
-
-    if ( screenSize.width > 425 ) {
-      titleFontSize = ( screenSize.width > 768 ) ? 30.0 : 25.0;
-    }
-
     return Column(
       children: [
         Padding(
@@ -29,7 +21,7 @@ class MyInterviewsWidgets extends StatelessWidget {
           child: Center(
             child: Text(
               '${constants.myInterviewsTitle}',
-              style: TextStyle( fontSize: titleFontSize ),
+              style: TextStyle( fontSize: 22.0 ),
             ),
           ),
         ),

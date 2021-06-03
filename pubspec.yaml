@@ -17,6 +17,7 @@ dependencies:
   flutter_bloc: ^7.0.1
   hive_flutter: ^1.0.0
   cupertino_icons: ^1.0.2
+  responsive_framework: ^0.1.0
   mask_text_input_formatter: ^2.0.0
 
 dev_dependencies:

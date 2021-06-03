@@ -4,19 +4,21 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '/src/bloc/interview_bloc/interview_bloc.dart';
 
-class AddInterviewForms extends StatelessWidget {
-
-  final companyController = TextEditingController();
-  final commentController = TextEditingController();
-  final numberController = TextEditingController();
-  final dateController = TextEditingController();
-  final maskFormatter = new MaskTextInputFormatter(mask: '+## (###) ### ####', filter: { "#": RegExp(r'[0-9]') },);
+class AddInterviewForms extends StatefulWidget {
 
   final GlobalKey<FormState> addInterviewFormKey;
 
   AddInterviewForms({
     required this.addInterviewFormKey
   });
+
+  @override
+  _AddInterviewFormsState createState() => _AddInterviewFormsState();
+}
+
+class _AddInterviewFormsState extends State<AddInterviewForms> {
+
+  final dateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +34,13 @@ class AddInterviewForms extends StatelessWidget {
           height: 300.0,
           width: double.infinity,
           child: Form(
-            key: this.addInterviewFormKey,
+            key: this.widget.addInterviewFormKey,
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: companyController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Company'
@@ -52,7 +53,6 @@ class AddInterviewForms extends StatelessWidget {
                     ),
                     SizedBox( height: 15.0 ),
                     TextFormField(
-                      controller: commentController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Comment'
@@ -65,9 +65,10 @@ class AddInterviewForms extends StatelessWidget {
                     ),
                     SizedBox( height: 15.0 ),
                     TextFormField(
-                      controller: numberController,
                       keyboardType: TextInputType.phone,
-                      inputFormatters: [maskFormatter],
+                      inputFormatters: [
+                        MaskTextInputFormatter(mask: '(###) ### ####', filter: { '#': RegExp(r'[0-9]') })
+                      ],
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Number'
@@ -136,5 +137,4 @@ class AddInterviewForms extends StatelessWidget {
     }
     return '';
   }
-
 }

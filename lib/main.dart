@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
 
 import 'src/bloc/sign_in/sign_in_bloc.dart';
 import 'src/bloc/sign_up/sign_up_bloc.dart';
@@ -34,7 +35,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Rest & Crud',
-      home: SingInPage()
+      builder: (context, child) => ResponsiveWrapper.builder(
+          child,
+          maxWidth: 1200,
+          minWidth: 280,
+          defaultScale: true,
+          breakpoints: [
+            ResponsiveBreakpoint.resize(280, name: MOBILE),
+            ResponsiveBreakpoint.resize(480, name: MOBILE),
+            ResponsiveBreakpoint.autoScale(800, name: TABLET),
+            ResponsiveBreakpoint.autoScale(1000, name: DESKTOP),
+          ],
+          background: Container(color: Color(0xFFF5F5F5))),
+      home: SingInPage(),
     );
   }
 }
